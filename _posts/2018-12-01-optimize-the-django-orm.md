@@ -1,3 +1,7 @@
+---
+title: Optimize the Django ORM
+---
+
 One of Django's main benefits is the built-in models and ORM (object-relational mapper). It provides a quick to use, common interface for data operations for your models and can handle most queries pretty easily. It can also do some tricky SQL once you understand the syntax.
 
 However, one drawback is because the SQL calls _are_ abstracted behind a simple API, it's easy to end up making more SQL calls than you realize.
