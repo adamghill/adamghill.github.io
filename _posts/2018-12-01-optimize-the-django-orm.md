@@ -1,7 +1,9 @@
 ---
-title: Optimize the Django ORM
+layout: post
+title: "Optimize the Django ORM"
+date:   2018-12-01 22:33:16 -0400
+categories: django python
 ---
-
 One of Django's main benefits is the built-in models and ORM (object-relational mapper). It provides a quick to use, common interface for data operations for your models and can handle most queries pretty easily. It can also do some tricky SQL once you understand the syntax.
 
 However, one drawback is because the SQL calls _are_ abstracted behind a simple API, it's easy to end up making more SQL calls than you realize.
@@ -47,10 +49,10 @@ def index(request):
 ```
 
 ```django
-<!-- index.html -->
+<!-- index.html -->{% raw %}
 {% for blog in blogs %}
 Author: {{ blog.author.name }}
-{% endfor %}
+{% endfor %}{% endraw %}
 ```
 
 In the code above, each blog in the `for loop` in `index.html` will call the database again for the author's name. So, there would be 1 database call for all of the blogs, and then an additional database call for each blog to get the author's name.
