@@ -21,11 +21,11 @@ Here are some sample models that will be used to illustrate some of the concepts
 ```python
 # models.py
 class Author(models.Model):
-	name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
 
 class Book(models.Model):
-	author = models.ForeignKey(Author, related_name="books", on_delete=models.PROTECT)
-	title = models.CharField(max_length=255)
+    author = models.ForeignKey(Author, related_name="books", on_delete=models.PROTECT)
+    title = models.CharField(max_length=255)
 ```
 
 
@@ -74,9 +74,9 @@ One thing to realize is that Django's ORM is pretty lazy by default. It will not
 ```python
 # views.py
 def index(request):
-	books = Book.objects.all()
-	
-	return render(request, { "books": books })
+    books = Book.objects.all()
+    
+    return render(request, { "books": books })
 ```
 
 ```django
@@ -86,7 +86,7 @@ Book Author: {{ book.author.name }}<br />
 {% endfor %}{% endraw %}
 ```
 
-In the code above, each book in the `for loop` in `index.html` will call the database again for the author's name. So, there would be 1 database call for all of the books, and then an additional database to get each author's name.
+In the code above, each book in the `for loop` in `index.html` will call the database again for the author's name. So, there would be 1 database call to retrieve the set of all books, and then an additional database call for every book in the list.
 
 The way to prevent the extra database calls is to use [`select_related`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#select-related) to force Django to join to the other model once and prevent subsequent calls if that relation is used.
 
@@ -95,34 +95,44 @@ Updating the view code to use a `select_related` would reduce the total sql call
 ```python
 # views.py
 def index(request):
-	books = Book.objects.select_related("author").all()
-	
-	return render(request, { "books": books })
+    books = Book.objects.select_related("author").all()
+    
+    return render(request, { "books": books })
 ```
 
 In some cases `select_related` won't work, but `prefetch_related` will. The Django documentation has [lots more details](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#prefetch-related) about when to use `prefetch_related`.
 
 # Beware the instantiating of models
 
-When the Django ORM creates a [QuerySet]() it takes the data retrieved from the database and populates the models. However, if you don't need a model, there are a few ways to skip constructing them unnecessarily.
+When the Django ORM creates a `QuerySet` it takes the data retrieved from the database and populates the models. However, if you don't need a model, there are a few ways to skip constructing them unnecessarily.
 
-`values_list` will return a list of tuples for all of the columns specified. Particularly useful is the `flat=True` keyword argument which returns a regular list if only one field is specified.
+[`values_list`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#values-list) will return a list of tuples for all of the columns specified. Particularly useful is the `flat=True` keyword argument which returns a flattened list if only one field is specified.
 
 ```python
 # get a list of book ids to use later
 book_ids = Book.objects.all().values_list("id", flat=True)
 ```
 
-Another pattern that I have done in the past is to create a dictionary with pair of data that is required. For example, if I was going to need blog ids and their urls:
+You can also create a dictionary with the pair of data that might be required later with [`values`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#django.db.models.query.QuerySet.values). For example, if I was going to need blog ids and their urls:
 
 ```python
 # get a dictionary of book id->title
 book_ids_to_titles = {b.get("id"): b.get("title") for b in Book.objects.all().values("id", "title")}
 ```
 
-To get all of the book ids: `book_ids_to_titles.keys()`. The get all titles: `book_ids_to_titles.values()`.
+To get all of the book ids: `book_ids_to_titles.keys()`. To get all titles: `book_ids_to_titles.values()`.
 
-Somewhat related, [`bidict`](https://bidict.readthedocs.io/en/master/) is a easy library to use if you need an easy way to retrieve a dictionary's key form it's value and vice versa (as opposed to keeping around 2 dictionaries).
+Somewhat related, [`bidict`](https://bidict.readthedocs.io/en/master/) is fantastic for an easy way to retrieve a dictionary's key from its value and vice versa (as opposed to keeping around 2 dictionaries).
+
+```python
+book_ids_to_titles = bidict({
+    "1": "The Sandman",
+    "2": "Good Omens",
+    "3": "Coraline",
+})
+
+assert book_ids_to_titles["1"] == book_ids_to_titles.inv["The Sandman"]
+```
 
 # Filtering on ids makes the world go 'round
 
@@ -156,29 +166,29 @@ author_counts = (
 )
 
 for obj in author_counts:
-	print(f"{obj.get('book_count')} books by {obj.get('author__name')}")
+    print(f"{obj.get('book_count')} books by {obj.get('author__name')}")
 ```
 
 [`Aggregation`](https://docs.djangoproject.com/en/2.1/topics/db/aggregation/) is the simpler version of [`annotation`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#django.db.models.query.QuerySet.annotate) if you want calculate a value for all objects in a list (e.g. get the maximum id from a list of models). [`Annotation`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#django.db.models.query.QuerySet.annotate) is useful if you want to calculate values over each model in a list and get the output.
 
 # Bulk _smash_! Errr, create
 
-Creating multiple objects with one query is possible with [`bulk_create`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#bulk-create). There are some caveats to using [`bulk_create`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#bulk-create), and unfortunately you don't get a list of ids created after the insert which would be useful. But, for simple use-cases it works great.
+Creating multiple objects with one query is possible with [`bulk_create`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#bulk-create). There are some caveats to using it, and unfortunately you don't get a list of ids created after the insert which would be useful. But, for simple use-cases it works great.
 
 ```python
 author = Author(name="Neil Gaiman")
 author.save()
 
 Book.objects.bulk_create([
-	Book(title="Neverwhere", author=author),
-	Book(title="The Graveyard Book", author=author),
+    Book(title="Neverwhere", author=author),
+    Book(title="The Graveyard Book", author=author),
     Book(title="The Ocean at the End of Lane", author=author),
 ])
 ```
 
 # We want to bulk _you_ up
 
-[`update`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#update) is a method on `QuerySet`, so you are able to retrieve a set of objects and update a field on all of them with one SQL query. However, if you want to update a set of models with different field values [`django-bulk-update`](https://github.com/aykut/django-bulk-update) will come in handy. This package lets you create one SQL statement for a set of model updates even if they have differing values.
+[`update`](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#update) is a method on `QuerySet`, so you are able to retrieve a set of objects and update a field on all of them with one SQL query. However, if you want to update a set of models with different field values [`django-bulk-update`](https://github.com/aykut/django-bulk-update) will come in handy. It automagically creates one SQL statement for a set of model updates even if they have differing values.
 
 ```python
 from django.utils import timezone
