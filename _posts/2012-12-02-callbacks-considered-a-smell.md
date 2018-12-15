@@ -1,6 +1,10 @@
+---
+layout: post
+title: "Callbacks considered a smell"
+date: 2012-12-02 10:20:16 -0400
+---
 
-
-Here are the ways I have approached dealing with nested callbacks in my own JavaScript code. My samples all set 3 keys in a fake database , then retrieves those 3 keys and prints the values as a decent approximation of dealing with callbacks and I/O. These samples were part of a Intro to Node.js talk I gave at [The Motley Fool](http://culture.fool.com/).
+Here are the ways I have approached dealing with nested callbacks in my own JavaScript code. My samples all set 3 keys in a fake database, then retrieves those 3 keys and prints the values as a decent approximation of dealing with callbacks and I/O. These samples were part of a Intro to Node.js talk I gave at [The Motley Fool](http://culture.fool.com/). The code is located at https://github.com/adamghill/openspace/tree/master/node.js.
 
 # Callbacks
 
@@ -75,7 +79,7 @@ Promises (or defereds or futures) are a way to represent the outcome of
 an asynchronous call. They used to be included in the core of Node.js, 
 however, they were pulled out around 0.2. However, There are a many 
 user-land modules that attempt to follow the promises interface. For 
-more details on promises, [this article](http://howtonode.org/promises) explains them in much more detail. For promises to work, you have to return a promise object from the underlying code, so my [fake db](https://github.com/themotleyfool/openspace/blob/master/node.js/src/04-callbacks/db/promisesDb.js) got some more love.
+more details on promises, [this article](http://howtonode.org/promises) explains them in much more detail. For promises to work, you have to return a promise object from the underlying code, so my [fake db](https://github.com/adamghill/openspace/blob/master/node.js/src/04-callbacks/db/promisesDb.js) got some more love.
 
 ```javascript
 var db = require('./db/promisesDb');
