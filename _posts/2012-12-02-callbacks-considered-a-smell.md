@@ -4,7 +4,7 @@ title: "Callbacks considered a smell"
 date: 2012-12-02 10:20:16 -0400
 ---
 
-Here are the ways I have approached dealing with nested callbacks in my own JavaScript code. My samples all set 3 keys in a fake database, then retrieves those 3 keys and prints the values as a decent approximation of dealing with callbacks and I/O. These samples were part of a Intro to Node.js talk I gave at [The Motley Fool](http://culture.fool.com/). The code is located at https://github.com/adamghill/openspace/tree/master/node.js.
+Here are the ways I have approached dealing with nested callbacks in my own JavaScript code. My samples all set 3 keys in a fake database, then retrieves those 3 keys and prints the values as a decent approximation of dealing with callbacks and I/O. These samples were part of a Intro to Node.js talk I gave at [The Motley Fool](http://culture.fool.com/). The code is located at [https://github.com/adamghill/openspace/tree/master/node.js](https://github.com/adamghill/openspace/tree/master/node.js).
 
 # Callbacks
 
