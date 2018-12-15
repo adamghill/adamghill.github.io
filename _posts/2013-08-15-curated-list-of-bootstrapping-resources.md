@@ -4,7 +4,7 @@ title: "Curated list of software bootstrapping resources"
 date: 2013-08-15 10:20:16 -0400
 categories: startups
 ---
-# Curated list of software bootstrapping resources
+
 Bootstrappers, microISVs, micropeneurs, small software businesses — whatever you want to call them, they are way more interesting (to me, anyway) than the over-hyped Silicon Valley bullshit that so many are infatuated with.
 
 Unfortunately, sometimes it is hard to find information about going this route, so I figured I would cull the links I have floating around and share the love. They inspire me to continue to pursue my passions even if I am not making any money (yet).
