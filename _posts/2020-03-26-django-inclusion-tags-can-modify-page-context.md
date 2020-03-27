@@ -32,9 +32,9 @@ Maybe unsurprisingly, the template tag worked just fine, however it had unintend
 
 The following Django template should hopefully make clear what could potetnially happen:
 ```html
-Initial view context variable: {{ link }}<br />
-{% jump_link %}<br />
-Clobbered view context variable from the inclusion tag: {{ link }}<br />
+Initial view context variable: {{ "{{ link " }}}}<br />
+{{ "{% jump_link " }}%}<br />
+Clobbered view context variable from the inclusion tag: {{ "{{ link " }}}}<br />
 ```
 
 This _makes sense_ once I realized that modifying the context while the template is rendering is going to affect rendering later portions of the template, however I definitely did not expect it to happen. In general, I would recommend against changing the context inside of the template tag because it makes debugging what happens in the template much more difficult.
