@@ -14,14 +14,14 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: adamghill.com
-email: 
+email:
 description: >- # this means to ignore newlines until "baseurl:"
   Searching for tech enlightenment
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://adamghill.com" # the base hostname & protocol for your site, e.g. http://example.com
 
 twitter_username: adamghill
-github_username:  adamghill
+github_username: adamghill
 rss: rss
 
 # Build settings
@@ -29,9 +29,9 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-google_analytics: UA-22319575-1
-show_excerpts: true
+  - jekyll-analytics
 
+show_excerpts: true
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
@@ -43,3 +43,8 @@ show_excerpts: true
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+jekyll_analytics:
+  Plausible:
+    domain: "adamghill.com"
+    source: "https://plausible.io/js/plausible.js"
