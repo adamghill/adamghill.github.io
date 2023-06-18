@@ -4,59 +4,164 @@
   <style>
     main {
       padding: 2em;
-      margin-top: 10em;
-      border: 1px black dashed;
-      width: 20em;
+      margin-top: 6em;
+      margin-bottom: 6em;
+      border: 1px grey dashed;
+      width: 30em;
       position: absolute;
       right: 2em;
+    }
+
+    h1 {
+      padding: 0px;
+      margin: 0px;
+      display: inline;
+    }
+
+    h2 {
+      font-size: 16px;
+      display: inline;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .info {
+      cursor: help;
+      color: grey;
+      font-weight: normal;
+    }
+
+    .info::before {
+      content: '\27AF  ';
+    }
+
+    div.header {
+      margin: 2em;
+    }
+
+    div.header h1 {
+      border-bottom: 1px dashed grey;
     }
   </style>
   <script defer data-domain="adamghill.com" src="https://plausible.io/js/script.js"></script>
 </head>
 
 <body>
+  <div class="header">
+    <h1>adamghill.com</h1>
+  </div>
+
   <main>
-    <h1>I make things</h1>
+    <h1>Here</h1>
+    <h2 class="info">Sites</h2>
+
     <ul>
       <li>
         <a href="https://fediview.com">fediview.com</a>
+        <span class="info">
+          Algorithmic timeline for Mastodon
+        </span>
       </li>
       <li>
         <a href="https://devmarks.io">devmarks.io</a>
-      </li>
-      <li>
-        <a href="https://django-unicorn.com">django-unicorn.com</a>
+        <span class="info">
+          Bookmarking for developers
+        </span>
       </li>
       <li>
         <a href="https://alldjango.com">alldjango.com</a>
+        <span class="info">
+          No bullshit help for perfectionists with deadlines
+        </span>
       </li>
       <li>
         <a href="https://unsuckjs.com">unsuckjs.com</a>
-      </li>
-      <li>
-        <a href="https://sponsorama.dev">sponsorama.dev</a>
+        <span class="info">
+          Progressively enhance HTML
+        </span>
       </li>
       <li>
         <a href="https://python-utils.adamghill.com">python-utils.adamghill.com</a>
+        <span class="info">
+          Online playground for Python
+        </span>
       </li>
       <li>
         <a href="https://isitwebscale.adamghill.com">isitwebscale.adamghill.com</a>
+        <span class="info">
+          But... is it web scale?
+        </span>
+      </li>
+    </ul>
+
+    <h1>There</h1>
+    <h2 class="info">Libraries</h2>
+    <ul>
+      <li>
+        <a href="https://django-unicorn.com">unicorn</a>
+        <span class="info">
+          Reactive component library for Django
+        </span>
+      </li>
+      <li>
+        <a href="https://dlitejs.com">dlite</a>
+        <span class="info">
+          JS library for Web Components and interactivity
+        </span>
+      </li>
+      <li>
+        <a href="https://coltrane.readthedocs.io">coltrane</a>
+        <span class="info">
+          Django-based content framework that uses Markdown
+        </span>
+      </li>
+      <li>
+        <a href="https://minestrone.readthedocs.io">minestrone</a>
+        <span class="info">
+          Search, modify, and parse messy HTML
+        </span>
+      </li>
+      <li>
+        <a href="https://django-fbv.readthedocs.io">django-fbv</a>
+        <span class="info">
+          Utilities to make Django function-based views cleaner
+        </span>
+      </li>
+      <li>
+        <a href="https://django-rich-logging.readthedocs.io">django-rich-logging</a>
+        <span class="info">
+          Live updating Django request logging
+        </span>
       </li>
     </ul>
 
     <h1>Elsewhere</h1>
+    <h2 class="info">Writing</h2>
+
     <ul>
       <li>
-        <a href="https://indieweb.social/@adamghill">indieweb.social/@adamghill</a>
+        <a href="https://github.com/adamghill">github.com/adamghill</a>
+        <span class="info">
+          Codes
+        </span>
       </li>
       <li>
-        <a href="https://github.com/adamghill">github.com/adamghill</a>
+        <a href="https://indieweb.social/@adamghill">indieweb.social/@adamghill</a>
+        <span class="info">
+          Mastodon ramblings
+        </span>
       </li>
       <li>
         <a href="https://dev.to/adamghill">dev.to/adamghill</a>
+        <span class="info">
+          Blog posts
+        </span>
       </li>
       <li>
         <a href="https://www.indiehackers.com/adamghill">indiehackers.com/adamghill</a>
+        <span class="info">
+          Work in public
+        </span>
       </li>
     </ul>
   </main>
